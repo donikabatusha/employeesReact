@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {Route} from 'react-router-dom';
+import axios from 'axios';
 import './App.css';
+import Employees from './components/EmployeesList/Employees';
+import EditEmployee from './components/EditEmployee/EditEmployee';
+import Header from './components/Header/Header';
 
-function App() {
+class App extends Component {
+
+  state = {
+    employees:[]
+  }
+  componentDidMount(){
+    axios.get('https://jsonplaceholder.typicode.com/users?_limit=10').then(res => this.setState({employees: res.data }))
+  };
+
+  editEmployee = (id) =>{
+      console.log(id);
+  }
+
+  render(){
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <Header />
+        <Route exact path="/EditEmployee/:id" render={
+          () => <EditEmployee />
+        } />
+
+        <Route exact path="/" render={
+          () => <Employees editEmployee={this.editEmployee} employees={this.state.employees} />
+        } />     
     </div>
-  );
+    );
+  }
 }
 
 export default App;
