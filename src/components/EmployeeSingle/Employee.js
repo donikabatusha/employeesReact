@@ -10,7 +10,7 @@ class Employee extends Component{
                 <p>Name: {this.props.name}</p>
                 <p>Username: {this.props.username}</p>
                 <p>Email: {this.props.email}</p>
-                <button className="edit__btn"><NavLink to={"/EditEmployee/" + this.props.id}>Edit</NavLink></button>
+                <button className="edit__btn"><NavLink to={`/EditEmployee/${this.props.id}`}>Edit</NavLink></button>
             </div>
         )
     }

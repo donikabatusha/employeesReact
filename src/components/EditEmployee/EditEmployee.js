@@ -14,16 +14,15 @@ class EditEmployee extends Component {
     }
 
     componentDidMount() {
-        // console.log(this.props);
-        const id = this.props.match.params.id;
-        axios.get('https://jsonplaceholder.typicode.com/users/' + id).then(res => {
-            this.setState({
-                id: res.data.id,
-                name: res.data.name,
-                username: res.data.username,
-                email: res.data.email
-            });
-        })
+        axios.get(`https://jsonplaceholder.typicode.com/users/${this.props.match.params.id}`)
+            .then(res => {
+                this.setState({
+                    id: res.data.id,
+                    name: res.data.name,
+                    username: res.data.username,
+                    email: res.data.email
+                });
+            })
     }
 
     changeName = (e) => {
@@ -37,9 +36,8 @@ class EditEmployee extends Component {
     }
 
     updateData = () => {
-        this.setState({show: true})
-        const id = this.props.match.params.id;
-        axios.put('https://jsonplaceholder.typicode.com/users/' + id, {
+        this.setState({ show: true });
+        axios.put(`https://jsonplaceholder.typicode.com/users/${this.props.match.params.id}`, {
             name: this.state.name,
             username: this.state.username,
             email: this.state.email
@@ -56,7 +54,7 @@ class EditEmployee extends Component {
     render() {
         return (
             <div className="main-div">
-                
+
                 {this.state && (
                     <form>
                         <div className="form-group main-element">
@@ -76,10 +74,9 @@ class EditEmployee extends Component {
                 )}
                 {
                     (this.state.show) ?
-                    <div className="alert alert-primary" role="alert">
-                        User profile updated
-                    </div>
-                    : <p></p>
+                        <div className="alert alert-primary" role="alert">
+                            User profile updated
+                        </div> : null
                 }
             </div>
         )
